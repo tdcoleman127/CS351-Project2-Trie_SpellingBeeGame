@@ -16,29 +16,32 @@ class Trie:
     """ A class for the Trie """
     def __init__ (self):
         self.root = Node("root")
-        self.trieDict = []
+        self.trieList = []
         self.numWords = 0
         
         
     def getFromFile(self, filename:str) -> bool:
 
+        # # Make sure the filename wasn't empty:
+
+        # if not filename:
+        #     print("Empty filename.")
+        #     return False
+
+        # # Try and open it
+        # try:
+        #     file = open(filename, 'r')
+        # except EOFError:
+        #     print("No interactive input in the autograder environment.")
+        #     return False
+        
+        # # Put each line into the file
         # for line in file:
-
-        for line in file:
-            self.trieDict.append(line)
+        #     self.trieList.append(line)
             
-        try:
-            fname = input("Enter filename: ").strip()
-        file = open(filename, 'r')
-        except EOFError:
-            print("No interactive input in the autograder environment.")
-            return
-        if not fname:
-            print("Empty filename.")
-            return
-
-        file.close()
-        return True
+        # file.close()
+        # return True
+        pass
         
         # functions for Step 1
     # def getFrequencyCounts(fname):
@@ -70,6 +73,7 @@ class Trie:
     #Citing Professor Tryo's code from 9/25 lecture on Trie with static list of children
     def insert(self, word:str) -> bool:
         currNode = self.root
+        buildingWord = ""
         # Base case: Word already exists
         if(currNode.isWord):
             return False
@@ -85,10 +89,12 @@ class Trie:
             if currNode.children([ind] == None):
                 currNode.children[ind] = Node(ch.lower())
             # Move to the next character in the word
+            buildingWord += ch
             currNode = currNode.children[ind]
             
         currNode.isWord = True
         self.numWords = self.numWords + 1
+        self.trieList.append(buildingWord)
         return True
 
     # Search should find or not find a legit "word" no matter what
@@ -114,13 +120,22 @@ class Trie:
            return False
         
         currNode.isWord = False
+        self.numWords = self.numWords - 1
+        self.trieList.remove(word)
         return True
     
-    def clear():
-        pass
+    def clear(self) -> bool:
+        words = self.words()
+        for w in words:
+            self.remove(w)
+        return True
     
     def wordCount(self) -> int:
         return self.numWords
     
-    def words():
-        pass
+    def words(self) -> str:
+        self.trieList = sorted(self.trieList)
+        return self.trieList
+        # pass
+
+print("Hi father")
