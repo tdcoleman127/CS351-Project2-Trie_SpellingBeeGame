@@ -6,11 +6,11 @@ Created on Mon Sep 15 15:22:23 2025
 """
 
 class Node:
-    def __init__(self):
+    def __init__(self, ch=0, isWord=False):
         self.children = [None] * 26
         self.char = ""
         # What determines 
-        self.isWord = False
+        self.isWord = isWord
 
 class Trie:
     """ A class for the Trie """
@@ -70,13 +70,13 @@ class Trie:
     #     return newDict
         # pass
 
-    #Citing Professor Tryo's code from 9/25 lecture on Trie with static list of children
+    # Citing Professor Troy's code from 9/25 lecture on Trie with static list of children
     def insert(self, word:str) -> bool:
         currNode = self.root
         buildingWord = ""
         # Base case: Word already exists
-        if(currNode.isWord):
-            return False
+        # if(currNode.isWord):
+        #     return False
         
         # For each character in the given word
         for ch in word:
@@ -93,7 +93,11 @@ class Trie:
             currNode = currNode.children[ind]
             
         currNode.isWord = True
+
+        # Properties of Trie class: # of words in Trie and list of words
+        print("Word count " + self.numWords)
         self.numWords = self.numWords + 1
+        print("A word was added " + self.numWords)
         self.trieList.append(buildingWord)
         return True
 
@@ -139,3 +143,14 @@ class Trie:
         # pass
 
 print("Hi father")
+print("Hi mother")
+
+def main():
+
+    myTrie = Trie()
+    print(myTrie.insert("jerboa"))
+    # myTrie.insert("jerboa")
+    # print(myTrie.wordCount())
+
+
+main()
