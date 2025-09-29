@@ -75,18 +75,18 @@ class Trie:
         currNode = self.root
         buildingWord = ""
         # Base case: Word already exists
-        # if(currNode.isWord):
-        #     return False
+        if(self.search(word)):
+            return False
         
         # For each character in the given word
         for ch in word:
             # If a character isn't a letter
-            if(ch.isalpha()):
-                return False
+            # if(ch.isalpha()):
+            #     return False
             # Find the alphabetical index of the character
             ind = ord(ch.lower()) - 97
             # If it's not in the current 
-            if currNode.children([ind] == None):
+            if currNode.children[ind] == None:
                 currNode.children[ind] = Node(ch.lower())
             # Move to the next character in the word
             buildingWord += ch
@@ -95,10 +95,13 @@ class Trie:
         currNode.isWord = True
 
         # Properties of Trie class: # of words in Trie and list of words
-        print("Word count " + self.numWords)
+        # print("Word count: ")
+        # print(self.numWords)
         self.numWords = self.numWords + 1
-        print("A word was added " + self.numWords)
+        print("Word count after adding: ")
+        print(self.numWords)
         self.trieList.append(buildingWord)
+        print(self.trieList)
         return True
 
     # Search should find or not find a legit "word" no matter what
@@ -149,6 +152,13 @@ def main():
 
     myTrie = Trie()
     print(myTrie.insert("jerboa"))
+    print(myTrie.insert("jerbil"))
+    print(myTrie.insert("jerboa"))
+    print(myTrie.insert("notnert"))
+
+
+
+
     # myTrie.insert("jerboa")
     # print(myTrie.wordCount())
 
