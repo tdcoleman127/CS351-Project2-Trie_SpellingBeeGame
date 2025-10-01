@@ -75,13 +75,18 @@ class Trie:
         currNode = self.root
         buildingWord = ""
         # Base case: Word already exists
+        for ch in word:
+            if ch.isalpha() == False:
+                print("Cannot add " + word + " with non-alpha char " + ch)
+                return False
         if(self.search(word)):
             return False
         
         # For each character in the given word
         for ch in word:
             # If a character isn't a letter
-            # if(ch.isalpha()):
+            # if ch.isalpha() == False:
+            #     print("Cannot add " + word + " with non-alpha char " + ch)
             #     return False
             # Find the alphabetical index of the character
             ind = ord(ch.lower()) - 97
@@ -98,7 +103,7 @@ class Trie:
         # print("Word count: ")
         # print(self.numWords)
         self.numWords = self.numWords + 1
-        print("Word count after adding: ")
+        print("Word count after adding: " + word)
         print(self.numWords)
         self.trieList.append(buildingWord)
         print(self.trieList)
@@ -117,6 +122,11 @@ class Trie:
 
     
     def remove(self, word:str) -> bool:
+        if(self.search(word) == False):
+            print("Word count after failed removal of: " + word)
+            print(self.numWords)
+            return False
+        
         currNode = self.root
         # Go through the word, try to find it in the tree
         for ch in word:
@@ -129,13 +139,15 @@ class Trie:
         currNode.isWord = False
         self.numWords = self.numWords - 1
         self.trieList.remove(word)
+        print("Word count after removing: " + word)
+        print(self.numWords)
         return True
     
     def clear(self) -> bool:
         words = self.words()
         for w in words:
             self.remove(w)
-        return True
+        return self.numWords == 0
     
     def wordCount(self) -> int:
         return self.numWords
@@ -151,10 +163,39 @@ print("Hi mother")
 def main():
 
     myTrie = Trie()
+    print("Trie current word count")
+    print(myTrie.wordCount())
     print(myTrie.insert("jerboa"))
     print(myTrie.insert("jerbil"))
     print(myTrie.insert("jerboa"))
     print(myTrie.insert("notnert"))
+    print("\n")
+    print("Found the given word: ")
+    print(myTrie.search("notnert"))
+    print("\n")
+    print("Trie current word count before clearing")
+    print(myTrie.wordCount())
+
+    myTrie.clear()
+    print("Trie word count after clearing")
+    print(myTrie.wordCount())
+    print(myTrie.trieList)
+
+    # print(myTrie.remove("notnert"))
+    # print(myTrie.remove("jerboa"))
+    # print(myTrie.remove("sybil"))
+    # print(myTrie.remove("jerbil"))
+    # print(myTrie.remove("jerbil"))
+    # print(myTrie.remove("jerbil"))
+    # print(myTrie.remove("sybil"))
+
+    # print(myTrie.insert("CB--BB"))
+    # print(myTrie.insert("CB-2341225-BB"))
+    # print(myTrie.insert("CB-2341225-BB"))
+    # print(myTrie.insert("CB-#&^Q%$(*&*!*(@U()KDW-BB"))
+    # print(myTrie.insert(""))
+
+    
 
 
 
