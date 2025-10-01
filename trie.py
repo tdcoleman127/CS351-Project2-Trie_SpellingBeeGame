@@ -144,9 +144,12 @@ class Trie:
         return True
     
     def clear(self) -> bool:
-        words = self.words()
+        if(self.numWords == 0):
+            return False
+        words = self.trieList
         for w in words:
             self.remove(w)
+        self.remove(self.trieList[0])
         return self.numWords == 0
     
     def wordCount(self) -> int:
@@ -163,23 +166,40 @@ print("Hi mother")
 def main():
 
     myTrie = Trie()
-    print("Trie current word count")
-    print(myTrie.wordCount())
     print(myTrie.insert("jerboa"))
-    print(myTrie.insert("jerbil"))
-    print(myTrie.insert("jerboa"))
-    print(myTrie.insert("notnert"))
-    print("\n")
-    print("Found the given word: ")
-    print(myTrie.search("notnert"))
-    print("\n")
-    print("Trie current word count before clearing")
-    print(myTrie.wordCount())
+    print(myTrie.insert("jedrboa"))
+    print(myTrie.insert("jerbfoa"))
+    print(myTrie.insert("jehrboa"))
+    print(myTrie.words())
+    print(myTrie.clear())
+    print(myTrie.words())
 
-    myTrie.clear()
-    print("Trie word count after clearing")
-    print(myTrie.wordCount())
-    print(myTrie.trieList)
+    # print(myTrie.clear())
+    # print("Trie current word count")
+    # print(myTrie.wordCount())
+    # print(myTrie.insert("jerboa"))
+    # print(myTrie.insert("jerbil"))
+    # print(myTrie.insert("notnert"))
+    # print("\n")
+    # print("Found the given word: ")
+    # print(myTrie.search("notnert"))
+    # print("\n")
+    # print("Trie current word count before clearing")
+    # print(myTrie.wordCount())
+    # print("Trie current word list")
+    # print(myTrie.words())
+
+    # print("Clear value should be 0:")
+    # print(myTrie.clear())
+    # print(myTrie.words())
+
+
+    # print(myTrie.search("jerboa"))
+    # print(myTrie.words())
+    # print(myTrie.search(""))
+    # print("Trie word count after clearing")
+    # print(myTrie.wordCount())
+    # print(myTrie.trieList)
 
     # print(myTrie.remove("notnert"))
     # print(myTrie.remove("jerboa"))
