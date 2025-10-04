@@ -22,26 +22,26 @@ class Trie:
         
     def getFromFile(self, filename:str) -> bool:
 
-        # # Make sure the filename wasn't empty:
+        # Make sure the filename wasn't empty:
 
-        # if not filename:
-        #     print("Empty filename.")
-        #     return False
+        if not filename:
+            print("Empty filename.")
+            return False
 
-        # # Try and open it
-        # try:
-        #     file = open(filename, 'r')
-        # except EOFError:
-        #     print("No interactive input in the autograder environment.")
-        #     return False
+        # Try and open it
+        try:
+            file = open(filename, 'r')
+        except FileNotFoundError:
+            # print("No interactive input in the autograder environment.")
+            print("Error occurred opening file")
+            return False
         
-        # # Put each line into the file
-        # for line in file:
-        #     self.trieList.append(line)
+        # Put each line into the file
+        for line in file:
+            self.insert(line)
             
-        # file.close()
-        # return True
-        pass
+        file.close()
+        return True
         
         # functions for Step 1
     # def getFrequencyCounts(fname):
@@ -72,22 +72,23 @@ class Trie:
 
     # Citing Professor Troy's code from 9/25 lecture on Trie with static list of children
     def insert(self, word:str) -> bool:
+        if(self.root == None):
+            self.root = Node("root")
+
         currNode = self.root
         buildingWord = ""
         # Base case: Word already exists
         for ch in word:
             if ch.isalpha() == False:
-                print("Cannot add " + word + " with non-alpha char " + ch)
+                # print("Cannot add " + word + " with non-alpha char " + ch)
                 return False
+            
+        # Cannot add word already in Trie
         if(self.search(word)):
             return False
         
         # For each character in the given word
         for ch in word:
-            # If a character isn't a letter
-            # if ch.isalpha() == False:
-            #     print("Cannot add " + word + " with non-alpha char " + ch)
-            #     return False
             # Find the alphabetical index of the character
             ind = ord(ch.lower()) - 97
             # If it's not in the current 
@@ -99,9 +100,7 @@ class Trie:
             
         currNode.isWord = True
 
-        # Properties of Trie class: # of words in Trie and list of words
-        # print("Word count: ")
-        # print(self.numWords)
+        # Increment numWords and add it to trieList
         self.numWords = self.numWords + 1
         print("Word count after adding: " + word)
         print(self.numWords)
@@ -122,43 +121,47 @@ class Trie:
 
     
     def remove(self, word:str) -> bool:
-        if(self.search(word) == False):
-            print("Word count after failed removal of: " + word)
-            print(self.numWords)
+        # Perform a lazy deletion of a Trie word
+        currNode = self.root
+        if(self.search(word) == False or word not in self.trieList):
             return False
         
-        currNode = self.root
-        # Go through the word, try to find it in the tree
         for ch in word:
             ind = ord(ch.lower()) - 97
             currNode = currNode.children[ind]
 
-        if currNode.isWord == False:
-           return False
-        
+        # Lazily delete word
         currNode.isWord = False
+
         self.numWords = self.numWords - 1
         self.trieList.remove(word)
         print("Word count after removing: " + word)
         print(self.numWords)
+        print(self.trieList)
         return True
     
+
     def clear(self) -> bool:
+        print("Clearing tree...")
         if(self.numWords == 0):
             return False
-        words = self.trieList
-        for w in words:
-            self.remove(w)
-        self.remove(self.trieList[0])
+        
+        # Resetting parameters
+        self.root.children = [None] * 26
+        self.trieList = []
+        self.numWords = 0
+
         return self.numWords == 0
     
     def wordCount(self) -> int:
+        # O(1) return of current word count
         return self.numWords
     
     def words(self) -> str:
+        if(self.trieList == None):
+            return []
         self.trieList = sorted(self.trieList)
         return self.trieList
-        # pass
 
 print("Hi father")
 print("Hi mother")
@@ -166,62 +169,40 @@ print("Hi mother")
 def main():
 
     myTrie = Trie()
+    # print(myTrie.insert("jerboa"))
+    # print(myTrie.insert("jedrboa"))
+    # print(myTrie.insert("jerbfoa"))
+    # print(myTrie.insert("jehrboa"))
+    # print("The current words are: ")
+    # print(myTrie.words())
+    # print("Trie cleared?")
+    # print(myTrie.clear())
+    # print(myTrie.words())
+    # print("The current words after clearing: ")
+    # print(myTrie.words())
+
     print(myTrie.insert("jerboa"))
     print(myTrie.insert("jedrboa"))
     print(myTrie.insert("jerbfoa"))
-    print(myTrie.insert("jehrboa"))
-    print(myTrie.words())
-    print(myTrie.clear())
-    print(myTrie.words())
 
-    # print(myTrie.clear())
-    # print("Trie current word count")
-    # print(myTrie.wordCount())
-    # print(myTrie.insert("jerboa"))
-    # print(myTrie.insert("jerbil"))
-    # print(myTrie.insert("notnert"))
-    # print("\n")
-    # print("Found the given word: ")
-    # print(myTrie.search("notnert"))
-    # print("\n")
-    # print("Trie current word count before clearing")
-    # print(myTrie.wordCount())
-    # print("Trie current word list")
-    # print(myTrie.words())
+    print(myTrie.remove("jedrboa"))
+    print(myTrie.remove("jerboa"))
+    print(myTrie.remove("jerbfoa"))
 
-    # print("Clear value should be 0:")
-    # print(myTrie.clear())
-    # print(myTrie.words())
+    # Trying to remove something and then insert it
+    print(myTrie.remove("jerbfoa"))
+    print(myTrie.insert("jerbfoa"))
+    print(myTrie.remove("jerbfoa"))
+    print(myTrie.insert("jerbf---1oa"))
 
+    trie2 = Trie()
+    # trie2.getFromFile("jerboaTrials.docx")
+    print(trie2.wordCount())
+    print("Trie got from file")
+    print(trie2.getFromFile("wordlist.txt"))
+    print(trie2.wordCount())
 
-    # print(myTrie.search("jerboa"))
-    # print(myTrie.words())
-    # print(myTrie.search(""))
-    # print("Trie word count after clearing")
-    # print(myTrie.wordCount())
-    # print(myTrie.trieList)
-
-    # print(myTrie.remove("notnert"))
-    # print(myTrie.remove("jerboa"))
-    # print(myTrie.remove("sybil"))
-    # print(myTrie.remove("jerbil"))
-    # print(myTrie.remove("jerbil"))
-    # print(myTrie.remove("jerbil"))
-    # print(myTrie.remove("sybil"))
-
-    # print(myTrie.insert("CB--BB"))
-    # print(myTrie.insert("CB-2341225-BB"))
-    # print(myTrie.insert("CB-2341225-BB"))
-    # print(myTrie.insert("CB-#&^Q%$(*&*!*(@U()KDW-BB"))
-    # print(myTrie.insert(""))
-
-    
-
-
-
-
-    # myTrie.insert("jerboa")
-    # print(myTrie.wordCount())
+    return 0
 
 
 main()
