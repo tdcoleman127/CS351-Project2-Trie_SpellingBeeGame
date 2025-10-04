@@ -12,11 +12,37 @@ class SBTrie(Trie):
         self.insertDataMember = 0
         self.centralLetter = ''
         self.allowedLetters = []
-        
+        self.potentialWords = Trie()
+        self.currentWords = Trie()
+        self.currentScore = 0
+        self.foundPangram = False
+        self.foundBingo = False
 
-        
-    def sbWords():
+    def getLetters(self) -> str:
+        letterString = self.centralLetter + ""
+        letSet = sorted(self.allowedLetters)
+        for let in letSet:
+            letterString += let
+        return letterString
+    
+    def isNewSBWord(self, word: str) -> int:
+        pass
+
+    def isPangram(SBTrie, word: str) -> bool:
+        pass
+
+    def hasBingo (SBTrie) -> bool:
+        pass
+
+    def getFoundWords(self) -> [str]:
+        pass
+
+    def sbWords(centralLetter: str, otherLetters: str) -> [str]:
         pass
     
     def addFoundWord():
         pass
+
+def test():
+    sb = SBTrie()
+    print(sb.getLetters)

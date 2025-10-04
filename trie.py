@@ -190,7 +190,6 @@ def main():
 
     trie4 = Trie()
     print(trie4.getFromFile("words2.txt"))
-    return 0
 
 
 main()
