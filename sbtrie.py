@@ -10,6 +10,10 @@ class SBTrie(Trie):
     """ A class for the Spelling Bee Trie """
     def __init__ (self):
         self.insertDataMember = 0
+        self.centralLetter = ''
+        self.allowedLetters = []
+        
+
         
     def sbWords():
         pass

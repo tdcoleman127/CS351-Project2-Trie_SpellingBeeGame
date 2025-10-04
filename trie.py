@@ -38,37 +38,10 @@ class Trie:
         
         # Put each line into the file
         for line in file:
-            self.insert(line)
+            self.insert(line.strip())
             
         file.close()
         return True
-        
-        # functions for Step 1
-    # def getFrequencyCounts(fname):
-    #     # Intializing dictionary for frequency counts
-    #     myDict = {}
-
-    #     # Open file
-
-    #     file = open(fname, 'r')
-        
-    #     # Read file for each character in each line
-    #     for line in file:
-    #         for char in line:
-    #             if char not in myDict:
-    #                 # if char not found, create key and give value 1
-    #                 myDict[char] = 1
-    #             else:
-    #                 # if found, increment frequency value
-    #                 myDict[char] += 1
-    #     file.close()
-    #     print("The dictionary of frequency counts for " + fname + " is: ")
-        
-    #     # Sorting dictionary values by value, ascending
-    #     newDict = dict(sorted(myDict.items(), key=lambda x:x[1]))
-    #     print(newDict)
-    #     return newDict
-        # pass
 
     # Citing Professor Troy's code from 9/25 lecture on Trie with static list of children
     def insert(self, word:str) -> bool:
@@ -84,7 +57,7 @@ class Trie:
                 return False
             
         # Cannot add word already in Trie
-        if(self.search(word)):
+        if(self.search(word) == True):
             return False
         
         # For each character in the given word
@@ -102,10 +75,10 @@ class Trie:
 
         # Increment numWords and add it to trieList
         self.numWords = self.numWords + 1
-        print("Word count after adding: " + word)
-        print(self.numWords)
+        # print("Word count after adding: " + word)
+        # print(self.numWords)
         self.trieList.append(buildingWord)
-        print(self.trieList)
+        # print(self.trieList)
         return True
 
     # Search should find or not find a legit "word" no matter what
@@ -135,9 +108,9 @@ class Trie:
 
         self.numWords = self.numWords - 1
         self.trieList.remove(word)
-        print("Word count after removing: " + word)
-        print(self.numWords)
-        print(self.trieList)
+        # print("Word count after removing: " + word)
+        # print(self.numWords)
+        # print(self.trieList)
         return True
     
 
@@ -169,17 +142,17 @@ print("Hi mother")
 def main():
 
     myTrie = Trie()
-    # print(myTrie.insert("jerboa"))
-    # print(myTrie.insert("jedrboa"))
-    # print(myTrie.insert("jerbfoa"))
-    # print(myTrie.insert("jehrboa"))
-    # print("The current words are: ")
-    # print(myTrie.words())
-    # print("Trie cleared?")
-    # print(myTrie.clear())
-    # print(myTrie.words())
-    # print("The current words after clearing: ")
-    # print(myTrie.words())
+    print(myTrie.insert("jerboa"))
+    print(myTrie.insert("jedrboa"))
+    print(myTrie.insert("jerbfoa"))
+    print(myTrie.insert("jehrboa"))
+    print("The current words are: ")
+    print(myTrie.words())
+    print("Trie cleared?")
+    print(myTrie.clear())
+    print(myTrie.words())
+    print("The current words after clearing: ")
+    print(myTrie.words())
 
     print(myTrie.insert("jerboa"))
     print(myTrie.insert("jedrboa"))
@@ -198,10 +171,25 @@ def main():
     trie2 = Trie()
     # trie2.getFromFile("jerboaTrials.docx")
     print(trie2.wordCount())
-    print("Trie got from file")
     print(trie2.getFromFile("wordlist.txt"))
+    print("After Trie gets from wordlist.txt")
+    print(trie2.wordCount())
+    print(trie2.clear())
     print(trie2.wordCount())
 
+
+    trie3 = Trie()
+    # trie2.getFromFile("jerboaTrials.docx")
+    print(trie3.wordCount())
+    print(trie3.getFromFile("words.txt"))
+    print("After Trie gets from words.txt")
+    print(trie3.wordCount())
+    print(trie3.clear())
+    print(trie3.wordCount())
+    print(trie3.clear())
+
+    trie4 = Trie()
+    print(trie4.getFromFile("words2.txt"))
     return 0
 
 
