@@ -2,7 +2,7 @@
 """
 Created on Mon Sep 15 14:37:19 2025
 
-@author: troy
+@author: Trenton C
 """
 from sbtrie import SBTrie 
 
@@ -11,30 +11,114 @@ from sbtrie import SBTrie
 
 def getNewDictionary(sbt, filename):
   # enter needed code here for command 1
+  sbt.potentialWords.clear()
+  print(sbt.potentialWords.wordCount())
+  sbt.potentialWords.getFromFile(filename)
   pass
 
 def updateDictionary(sbt, filename):
   # enter needed code here for command 2
-  pass
+  
+  # Try and open it
+  if not filename:
+    print("Empty filename.")
+    return False
+  try:
+      file = open(filename, 'r')
+  except (FileNotFoundError, IOError):
+      print("Error occurred opening file")
+      return False
+  
+  # Put each line into the file
+  for line in file:
+      sbt.insert(line.strip())
+      
+  file.close()
+  return True
 
 def setupLetters(sbt, letters):
   # enter needed code here for command 3
+  count = 0
+  letterSet = set()
+  for l in letters:
+     if l.isalpha():
+        count += 1
+        letterSet.add(l)
+
+  # letterSet = set(letters)
+
+  if(len(letterSet) != 7):
+    print("Invalid letter set")
+  else:
+    sbt.centralLetter = ''
+    sbt.allowedLetters = []
+    sbt.currentWords.clear()
+    sbt.currentScore = 0
+    sbt.foundPangram = False
+    sbt.foundBingo = False
+
+    sbt.centralLetter = letters[0]
+    for i in range(1, len(letters)):
+      if letters[i].isalpha():
+        sbt.allowedLetters.append(letters[i].lower())
+             
   pass
 
+# IN progress
 def showLetters(sbt):
   # enter needed code here for command 4
+  print("Central Letter: " + sbt.centralLetter)
+  print("6 Other Letters")
+  print(*sbt.allowedLetters, sep=",")
   pass
 
 def attemptWord(sbt, word):
   # enter needed code here for command 5
+  result = sbt.isNewSBWord(word)
+  if result == -1:
+    print("word is too short")
+  elif result == -2:
+    print("word is missing central letter") 
+  elif result == -3:
+    print("word contains invalid letter")
+  elif result == -4:
+    print("word is not in the dictionary")
+  elif result == -5:
+    print("word has already been found")
+  else:
+    sbt.currentScore += result
+    combined_string = "found " + word + " " + str(result) + " points, words found, total " + str(sbt.currentScore) + " points"
+    if(sbt.foundPangram):
+     combined_string += ", Pangram found"
+    if(sbt.foundBingo):
+      combined_string += ", Bingo scored"
+    print(combined_string)
   pass
 
 def showFoundWords(sbt):
   # enter needed code here for command 6
-  pass
+  combined_string = str(sbt.currentWords.wordCount()) + " words found, total " + str(sbt.currentScore) + " points"
+  if(sbt.foundPangram):
+     combined_string += ", Pangram found"
+    
+  if(sbt.foundBingo):
+     combined_string += ", Bingo scored"
+    
+  print(combined_string)
 
+# IN progress
 def showAllWords(sbt):
   # enter needed code here for command 7
+  print("12345678901234567890")
+  
+  print(sbt.potentialWords.wordCount())
+  for word in sbt.potentialWords.words():
+    combined_string = word + " " + str(len(word))
+    if(sbt.foundPangram):
+      combined_string += " Pangram"
+    
+  if(sbt.foundBingo):
+     print("Bingo scored")
   pass
 
 def displayCommands():
@@ -75,31 +159,31 @@ def spellingBee():
     if(command == '2'):
         args = line[1:].strip()
         #print( "Debug 2:" + args + "***")
-        updateDictionary(sbt, args);
+        updateDictionary(sbt, args)
         
     if(command == '3'):
         args = line[1:].strip()
         #print( "Debug 3:" + args + "***")
-        setupLetters(sbt, args);
+        setupLetters(sbt, args)
 
 
     if(command == '4'):
-        showLetters(sbt);
+        showLetters(sbt)
 
     if(command == '5'):
         args = line[1:].strip()
         #print ( "Debug 5:" + args + "***")
-        attemptWord(sbt, args);
+        attemptWord(sbt, args)
 
     if(command == '6'):
-        showFoundWords(sbt);
+        showFoundWords(sbt)
 
     if(command == '7'):
         showAllWords(sbt)
 
     
     if(command == '8' or command == '?'):
-        displayCommands();
+        displayCommands()
     
     if(command == '9' or command == 'q'):
         break

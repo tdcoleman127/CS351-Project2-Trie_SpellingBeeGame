@@ -16,23 +16,17 @@ class Trie:
     """ A class for the Trie """
     def __init__ (self):
         self.root = Node("root")
-        self.trieList = []
+        self.trieWords = []
         self.numWords = 0
         
         
     def getFromFile(self, filename:str) -> bool:
-
-        # Make sure the filename wasn't empty:
-
         if not filename:
             print("Empty filename.")
             return False
-
-        # Try and open it
         try:
             file = open(filename, 'r')
-        except FileNotFoundError:
-            # print("No interactive input in the autograder environment.")
+        except (FileNotFoundError, IOError):
             print("Error occurred opening file")
             return False
         
@@ -60,6 +54,9 @@ class Trie:
         if(self.search(word) == True):
             return False
         
+        # Make word lowercase
+        word.lower()
+        
         # For each character in the given word
         for ch in word:
             # Find the alphabetical index of the character
@@ -73,12 +70,12 @@ class Trie:
             
         currNode.isWord = True
 
-        # Increment numWords and add it to trieList
+        # Increment numWords and add it to trieWords
         self.numWords = self.numWords + 1
         # print("Word count after adding: " + word)
         # print(self.numWords)
-        self.trieList.append(buildingWord)
-        # print(self.trieList)
+        self.trieWords.append(buildingWord)
+        # print(self.trieWords)
         return True
 
     # Search should find or not find a legit "word" no matter what
@@ -96,7 +93,7 @@ class Trie:
     def remove(self, word:str) -> bool:
         # Perform a lazy deletion of a Trie word
         currNode = self.root
-        if(self.search(word) == False or word not in self.trieList):
+        if(self.search(word) == False or word not in self.trieWords):
             return False
         
         for ch in word:
@@ -107,10 +104,10 @@ class Trie:
         currNode.isWord = False
 
         self.numWords = self.numWords - 1
-        self.trieList.remove(word)
+        self.trieWords.remove(word)
         # print("Word count after removing: " + word)
         # print(self.numWords)
-        # print(self.trieList)
+        # print(self.trieWords)
         return True
     
 
@@ -121,7 +118,7 @@ class Trie:
         
         # Resetting parameters
         self.root.children = [None] * 26
-        self.trieList = []
+        self.trieWords = []
         self.numWords = 0
 
         return self.numWords == 0
@@ -131,65 +128,63 @@ class Trie:
         return self.numWords
     
     def words(self) -> str:
-        if(self.trieList == None):
+        if(self.trieWords == None):
             return []
-        self.trieList = sorted(self.trieList)
-        return self.trieList
-
-print("Hi father")
-print("Hi mother")
+        self.trieWords = sorted(self.trieWords)
+        return self.trieWords
 
 def main():
 
-    myTrie = Trie()
-    print(myTrie.insert("jerboa"))
-    print(myTrie.insert("jedrboa"))
-    print(myTrie.insert("jerbfoa"))
-    print(myTrie.insert("jehrboa"))
-    print("The current words are: ")
-    print(myTrie.words())
-    print("Trie cleared?")
-    print(myTrie.clear())
-    print(myTrie.words())
-    print("The current words after clearing: ")
-    print(myTrie.words())
+    # myTrie = Trie()
+    # print(myTrie.insert("jerboa"))
+    # print(myTrie.insert("jedrboa"))
+    # print(myTrie.insert("jerbfoa"))
+    # print(myTrie.insert("jehrboa"))
+    # print("The current words are: ")
+    # print(myTrie.words())
+    # print("Trie cleared?")
+    # print(myTrie.clear())
+    # print(myTrie.words())
+    # print("The current words after clearing: ")
+    # print(myTrie.words())
 
-    print(myTrie.insert("jerboa"))
-    print(myTrie.insert("jedrboa"))
-    print(myTrie.insert("jerbfoa"))
+    # print(myTrie.insert("jerboa"))
+    # print(myTrie.insert("jedrboa"))
+    # print(myTrie.insert("jerbfoa"))
 
-    print(myTrie.remove("jedrboa"))
-    print(myTrie.remove("jerboa"))
-    print(myTrie.remove("jerbfoa"))
+    # print(myTrie.remove("jedrboa"))
+    # print(myTrie.remove("jerboa"))
+    # print(myTrie.remove("jerbfoa"))
 
-    # Trying to remove something and then insert it
-    print(myTrie.remove("jerbfoa"))
-    print(myTrie.insert("jerbfoa"))
-    print(myTrie.remove("jerbfoa"))
-    print(myTrie.insert("jerbf---1oa"))
+    # # Trying to remove something and then insert it
+    # print(myTrie.remove("jerbfoa"))
+    # print(myTrie.insert("jerbfoa"))
+    # print(myTrie.remove("jerbfoa"))
+    # print(myTrie.insert("jerbf---1oa"))
 
-    trie2 = Trie()
-    # trie2.getFromFile("jerboaTrials.docx")
-    print(trie2.wordCount())
-    print(trie2.getFromFile("wordlist.txt"))
-    print("After Trie gets from wordlist.txt")
-    print(trie2.wordCount())
-    print(trie2.clear())
-    print(trie2.wordCount())
+    # trie2 = Trie()
+    # # trie2.getFromFile("jerboaTrials.docx")
+    # print(trie2.wordCount())
+    # print(trie2.getFromFile("wordlist.txt"))
+    # print("After Trie gets from wordlist.txt")
+    # print(trie2.wordCount())
+    # print(trie2.clear())
+    # print(trie2.wordCount())
 
 
-    trie3 = Trie()
-    # trie2.getFromFile("jerboaTrials.docx")
-    print(trie3.wordCount())
-    print(trie3.getFromFile("words.txt"))
-    print("After Trie gets from words.txt")
-    print(trie3.wordCount())
-    print(trie3.clear())
-    print(trie3.wordCount())
-    print(trie3.clear())
+    # trie3 = Trie()
+    # # trie2.getFromFile("jerboaTrials.docx")
+    # print(trie3.wordCount())
+    # print(trie3.getFromFile("words.txt"))
+    # print("After Trie gets from words.txt")
+    # print(trie3.wordCount())
+    # print(trie3.clear())
+    # print(trie3.wordCount())
+    # print(trie3.clear())
 
-    trie4 = Trie()
-    print(trie4.getFromFile("words2.txt"))
+    # trie4 = Trie()
+    # print(trie4.getFromFile("words2.txt"))
+    pass
 
 
 main()

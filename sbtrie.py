@@ -2,7 +2,7 @@
 """
 Created on Mon Sep 15 15:17:47 2025
 
-@author: troy
+@author: Trenton C
 """
 from trie import Trie
 
@@ -18,6 +18,7 @@ class SBTrie(Trie):
         self.foundPangram = False
         self.foundBingo = False
 
+# IN progress
     def getLetters(self) -> str:
         letterString = self.centralLetter + ""
         letSet = sorted(self.allowedLetters)
@@ -26,23 +27,106 @@ class SBTrie(Trie):
         return letterString
     
     def isNewSBWord(self, word: str) -> int:
+        # currentLetters = self.getLetters()
+        if(self.currentWords.search(word) == False):
+            if(self.isPangram(word)):
+                return 7
+            elif(len(word) == 4):
+                return 1
+            else:
+                return 1 * len(word)
+            
+        # -1: word is too short 
+        if(len(word) < 4):
+            return -1
+        # -2: word is missing central letter
+        if self.centralLetter not in word:
+            return -2
+        # -3: word contains at least one invalid letter
+        for c in word:
+            if c.isalpha() == False or c == ' ':
+                return -3
+        # 4: word is not in the dictionary 
+        if word not in self.potentialWords:
+            return -4
+        # -5: word has already been found 
+        if word in self.currentWords:
+            return -5
         pass
 
-    def isPangram(SBTrie, word: str) -> bool:
-        pass
+    def isPangram(self, word: str) -> bool:
+        # Check if the word contains all 7 of the current letters
+        # Check if the word length is 7
+        if(len(word) != 7):
+            return False
+        currentLetters = self.getLetters()
+        currLetSet = set(currentLetters)
+        wordSet = set(word)
+        return wordSet == currLetSet
 
-    def hasBingo (SBTrie) -> bool:
-        pass
+    def hasBingo(self) -> bool:
+        currentLetters = self.getLetters()
+        if len(currentLetters) != 7:
+            return False
+        # If there isn't a word in the currentWords Trie that begins with
+        # one of the letters, return False
+        bingoList = []
+        for c in currentLetters:
+            # Faster method: Use a function to find a word with a prefix in Trie
+            # Standard method: Look in the Trie's word list and check the first char
+            for word in self.currentWords.trieWords:
+                if word[0] == c:
+                    # Add it to a list of characters, should have the same content as currentLetters list
+                    bingoList.append(word[0])
 
-    def getFoundWords(self) -> [str]:
-        pass
+        if(bingoList != currentLetters):
+            return False
+        return True
 
-    def sbWords(centralLetter: str, otherLetters: str) -> [str]:
-        pass
+    def getFoundWords(self):
+        return self.currentWords.words()
+
+    def sbWords(self, centralLetter: str, otherLetters: str):
+        finalList = []
+
+        # Word Criteria:
+        # - word has to be at least 4 letters long (len >= 4)
+        # - word has to have the central letter
+        # - words can only have the other letters in the otherLetters string
+
+        if(len(word) < 4 or centralLetter not in word):
+            return False
+        
+        for word in self.currentWords.words():
+            for c in word:
+                if c not in otherLetters:
+                    return False
+            finalList.append(word)
+
+        return finalList
     
-    def addFoundWord():
-        pass
 
-def test():
-    sb = SBTrie()
-    print(sb.getLetters)
+# def test():
+#     sb = SBTrie()
+#     sb.centralLetter = 'l'
+#     sb.allowedLetters = ['s', 'e', 'v', 'r', 'a']
+
+#     print(sb.isPangram("ninja"))
+#     print(sb.isPangram("several"))
+
+#     print(sb.isPangram("ninja"))
+#     print(sb.isNewSBWord("several"))
+
+
+#     # print(sb.getLetters)
+
+#     # my_string = "SuperSaiyajin"
+#     # my_set = set(my_string)
+#     # print(my_set)
+
+#     # my_string2 = "rSaiyajinSupe"
+#     # my_set2 = set(my_string2)
+#     # print(my_set2)
+#     # print(my_set == my_set2)
+
+# test()
