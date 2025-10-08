@@ -152,12 +152,27 @@ def spellingBee():
 
     
     if(command == '1'):
-        args = line[1:].strip()
+        # args = line[1:].strip()
+        try:
+          args = line[1:].strip()
+        except EOFError:
+            print("No interactive input in the autograder environment.")
+            return
+        if not args:
+            print("Empty filename.")
+            return
         #print ("Debug 1:" + args + "***")
         getNewDictionary(sbt, args)
 
     if(command == '2'):
-        args = line[1:].strip()
+        try:
+          args = line[1:].strip()
+        except EOFError:
+            print("No interactive input in the autograder environment.")
+            return
+        if not args:
+            print("Empty filename.")
+            return
         #print( "Debug 2:" + args + "***")
         updateDictionary(sbt, args)
         
@@ -191,4 +206,5 @@ def spellingBee():
 
   return
   
-spellingBee()
+if __name__ == "__main__":
+    spellingBee()
