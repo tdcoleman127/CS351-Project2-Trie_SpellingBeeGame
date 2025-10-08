@@ -20,7 +20,6 @@ class SBTrie(Trie):
         self.foundBingo = False
         self.numWords = 0
 
-# IN progress
     def getLetters(self) -> str:
         letterString = self.centralLetter + ""
         letSet = sorted(self.allowedLetters)
@@ -102,29 +101,3 @@ class SBTrie(Trie):
                             finalList.append(word)
 
         return finalList
-    
-
-# def test():
-#     sb = SBTrie()
-#     sb.centralLetter = 'l'
-#     sb.allowedLetters = ['s', 'e', 'v', 'r', 'a']
-
-#     print(sb.isPangram("ninja"))
-#     print(sb.isPangram("several"))
-
-#     print(sb.isPangram("ninja"))
-#     print(sb.isNewSBWord("several"))
-
-
-#     # print(sb.getLetters)
-
-#     # my_string = "SuperSaiyajin"
-#     # my_set = set(my_string)
-#     # print(my_set)
-
-#     # my_string2 = "rSaiyajinSupe"
-#     # my_set2 = set(my_string2)
-#     # print(my_set2)
-#     # print(my_set == my_set2)
-
-# test()

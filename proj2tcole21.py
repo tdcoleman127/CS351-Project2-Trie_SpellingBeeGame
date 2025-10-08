@@ -12,7 +12,6 @@ from sbtrie import SBTrie
 def getNewDictionary(sbt, filename):
   # enter needed code here for command 1
   sbt.potentialWords.clear()
-  print(sbt.potentialWords.wordCount())
   sbt.potentialWords.getFromFile(filename)
   pass
 
@@ -44,8 +43,6 @@ def setupLetters(sbt, letters):
      if l.isalpha():
         count += 1
         letterSet.add(l)
-
-  # letterSet = set(letters)
 
   if(len(letterSet) != 7):
     print("Invalid letter set")
@@ -106,10 +103,8 @@ def showFoundWords(sbt):
     
   print(combined_string)
 
-# IN progress
 def showAllWords(sbt):
   # enter needed code here for command 7
-  # print("12345678901234567890")
 
   finalList = sbt.sbWords(sbt.centralLetter, sbt.allowedLetters)
   combined_string = ""

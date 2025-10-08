@@ -9,7 +9,6 @@ class Node:
     def __init__(self, ch=0, isWord=False):
         self.children = [None] * 26
         self.char = ""
-        # What determines 
         self.isWord = isWord
 
 class Trie:
@@ -71,10 +70,7 @@ class Trie:
 
         # Increment numWords and add it to trieWords
         self.numWords = self.numWords + 1
-        # print("Word count after adding: " + word)
-        # print(self.numWords)
         self.trieWords.append(buildingWord)
-        # print(self.trieWords)
         return True
 
     # Search should find or not find a legit "word" no matter what
@@ -104,9 +100,6 @@ class Trie:
 
         self.numWords = self.numWords - 1
         self.trieWords.remove(word)
-        # print("Word count after removing: " + word)
-        # print(self.numWords)
-        # print(self.trieWords)
         return True
     
 
@@ -131,59 +124,3 @@ class Trie:
             return []
         self.trieWords = sorted(self.trieWords)
         return self.trieWords
-
-# def main():
-
-#     myTrie = Trie()
-#     print(myTrie.insert("jerboa"))
-#     print(myTrie.insert("jedrboa"))
-#     print(myTrie.insert("jerbfoa"))
-#     print(myTrie.insert("jehrboa"))
-#     print("The current words are: ")
-#     print(myTrie.words())
-#     print("Trie cleared?")
-#     print(myTrie.clear())
-#     print(myTrie.words())
-#     print("The current words after clearing: ")
-#     print(myTrie.words())
-
-#     print(myTrie.insert("jerboa"))
-#     print(myTrie.insert("jedrboa"))
-#     print(myTrie.insert("jerbfoa"))
-
-#     print(myTrie.remove("jedrboa"))
-#     print(myTrie.remove("jerboa"))
-#     print(myTrie.remove("jerbfoa"))
-
-#     # Trying to remove something and then insert it
-#     print(myTrie.remove("jerbfoa"))
-#     print(myTrie.insert("jerbfoa"))
-#     print(myTrie.remove("jerbfoa"))
-#     print(myTrie.insert("jerbf---1oa"))
-
-#     trie2 = Trie()
-#     # trie2.getFromFile("jerboaTrials.docx")
-#     print(trie2.wordCount())
-#     print(trie2.getFromFile("wordlist.txt"))
-#     print("After Trie gets from wordlist.txt")
-#     print(trie2.wordCount())
-#     print(trie2.clear())
-#     print(trie2.wordCount())
-
-
-#     trie3 = Trie()
-#     # trie2.getFromFile("jerboaTrials.docx")
-#     print(trie3.wordCount())
-#     print(trie3.getFromFile("words.txt"))
-#     print("After Trie gets from words.txt")
-#     print(trie3.wordCount())
-#     print(trie3.clear())
-#     print(trie3.wordCount())
-#     print(trie3.clear())
-
-#     trie4 = Trie()
-#     print(trie4.getFromFile("words2.txt"))
-#     pass
-
-
-# main()
