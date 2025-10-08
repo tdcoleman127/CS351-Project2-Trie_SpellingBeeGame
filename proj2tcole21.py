@@ -61,17 +61,13 @@ def setupLetters(sbt, letters):
     for i in range(1, len(letters)):
       if letters[i].isalpha():
         sbt.allowedLetters.append(letters[i].lower())
-             
-  pass
 
-# IN progress
 def showLetters(sbt):
   # enter needed code here for command 4
   print("Central Letter: " + sbt.centralLetter)
   print("6 Other Letters")
   print(*sbt.allowedLetters, sep=",")
-  pass
-
+  
 def attemptWord(sbt, word):
   # enter needed code here for command 5
   result = sbt.isNewSBWord(word)
@@ -86,8 +82,12 @@ def attemptWord(sbt, word):
   elif result == -5:
     print("word has already been found")
   else:
+    # Add to score
     sbt.currentScore += result
-    combined_string = "found " + word + " " + str(result) + " points, words found, total " + str(sbt.currentScore) + " points"
+    # Increase numWord count
+    sbt.currentWords.numWords += 1
+    sbt.currentWords.insert(word)
+    combined_string = "found " + word + " " + str(result) + " points, " + str(sbt.currentWords.wordCount()) + " words found, total " + str(sbt.currentScore) + " points"
     if(sbt.foundPangram):
      combined_string += ", Pangram found"
     if(sbt.foundBingo):
@@ -109,13 +109,15 @@ def showFoundWords(sbt):
 # IN progress
 def showAllWords(sbt):
   # enter needed code here for command 7
-  print("12345678901234567890")
-  
-  print(sbt.potentialWords.wordCount())
-  for word in sbt.potentialWords.words():
+  # print("12345678901234567890")
+
+  finalList = sbt.sbWords(sbt.centralLetter, sbt.allowedLetters)
+  combined_string = ""
+  for word in finalList:
     combined_string = word + " " + str(len(word))
     if(sbt.foundPangram):
       combined_string += " Pangram"
+    print(combined_string)
     
   if(sbt.foundBingo):
      print("Bingo scored")

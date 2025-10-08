@@ -29,11 +29,10 @@ class Trie:
         except (FileNotFoundError, IOError):
             print("Error occurred opening file")
             return False
-        
         # Put each line into the file
         for line in file:
-            self.insert(line.strip())
-            
+            self.insert(line)
+        
         file.close()
         return True
 
@@ -112,7 +111,7 @@ class Trie:
     
 
     def clear(self) -> bool:
-        print("Clearing tree...")
+        # print("Clearing tree...")
         if(self.numWords == 0):
             return False
         
@@ -133,58 +132,58 @@ class Trie:
         self.trieWords = sorted(self.trieWords)
         return self.trieWords
 
-def main():
+# def main():
 
-    # myTrie = Trie()
-    # print(myTrie.insert("jerboa"))
-    # print(myTrie.insert("jedrboa"))
-    # print(myTrie.insert("jerbfoa"))
-    # print(myTrie.insert("jehrboa"))
-    # print("The current words are: ")
-    # print(myTrie.words())
-    # print("Trie cleared?")
-    # print(myTrie.clear())
-    # print(myTrie.words())
-    # print("The current words after clearing: ")
-    # print(myTrie.words())
+#     myTrie = Trie()
+#     print(myTrie.insert("jerboa"))
+#     print(myTrie.insert("jedrboa"))
+#     print(myTrie.insert("jerbfoa"))
+#     print(myTrie.insert("jehrboa"))
+#     print("The current words are: ")
+#     print(myTrie.words())
+#     print("Trie cleared?")
+#     print(myTrie.clear())
+#     print(myTrie.words())
+#     print("The current words after clearing: ")
+#     print(myTrie.words())
 
-    # print(myTrie.insert("jerboa"))
-    # print(myTrie.insert("jedrboa"))
-    # print(myTrie.insert("jerbfoa"))
+#     print(myTrie.insert("jerboa"))
+#     print(myTrie.insert("jedrboa"))
+#     print(myTrie.insert("jerbfoa"))
 
-    # print(myTrie.remove("jedrboa"))
-    # print(myTrie.remove("jerboa"))
-    # print(myTrie.remove("jerbfoa"))
+#     print(myTrie.remove("jedrboa"))
+#     print(myTrie.remove("jerboa"))
+#     print(myTrie.remove("jerbfoa"))
 
-    # # Trying to remove something and then insert it
-    # print(myTrie.remove("jerbfoa"))
-    # print(myTrie.insert("jerbfoa"))
-    # print(myTrie.remove("jerbfoa"))
-    # print(myTrie.insert("jerbf---1oa"))
+#     # Trying to remove something and then insert it
+#     print(myTrie.remove("jerbfoa"))
+#     print(myTrie.insert("jerbfoa"))
+#     print(myTrie.remove("jerbfoa"))
+#     print(myTrie.insert("jerbf---1oa"))
 
-    # trie2 = Trie()
-    # # trie2.getFromFile("jerboaTrials.docx")
-    # print(trie2.wordCount())
-    # print(trie2.getFromFile("wordlist.txt"))
-    # print("After Trie gets from wordlist.txt")
-    # print(trie2.wordCount())
-    # print(trie2.clear())
-    # print(trie2.wordCount())
-
-
-    # trie3 = Trie()
-    # # trie2.getFromFile("jerboaTrials.docx")
-    # print(trie3.wordCount())
-    # print(trie3.getFromFile("words.txt"))
-    # print("After Trie gets from words.txt")
-    # print(trie3.wordCount())
-    # print(trie3.clear())
-    # print(trie3.wordCount())
-    # print(trie3.clear())
-
-    # trie4 = Trie()
-    # print(trie4.getFromFile("words2.txt"))
-    pass
+#     trie2 = Trie()
+#     # trie2.getFromFile("jerboaTrials.docx")
+#     print(trie2.wordCount())
+#     print(trie2.getFromFile("wordlist.txt"))
+#     print("After Trie gets from wordlist.txt")
+#     print(trie2.wordCount())
+#     print(trie2.clear())
+#     print(trie2.wordCount())
 
 
-main()
+#     trie3 = Trie()
+#     # trie2.getFromFile("jerboaTrials.docx")
+#     print(trie3.wordCount())
+#     print(trie3.getFromFile("words.txt"))
+#     print("After Trie gets from words.txt")
+#     print(trie3.wordCount())
+#     print(trie3.clear())
+#     print(trie3.wordCount())
+#     print(trie3.clear())
+
+#     trie4 = Trie()
+#     print(trie4.getFromFile("words2.txt"))
+#     pass
+
+
+# main()

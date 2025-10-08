@@ -9,6 +9,7 @@ from trie import Trie
 class SBTrie(Trie):
     """ A class for the Spelling Bee Trie """
     def __init__ (self):
+        self.root = Trie()
         self.insertDataMember = 0
         self.centralLetter = ''
         self.allowedLetters = []
@@ -17,6 +18,7 @@ class SBTrie(Trie):
         self.currentScore = 0
         self.foundPangram = False
         self.foundBingo = False
+        self.numWords = 0
 
 # IN progress
     def getLetters(self) -> str:
@@ -27,7 +29,6 @@ class SBTrie(Trie):
         return letterString
     
     def isNewSBWord(self, word: str) -> int:
-        # currentLetters = self.getLetters()
         if(self.currentWords.search(word) == False):
             if(self.isPangram(word)):
                 return 7
@@ -47,10 +48,10 @@ class SBTrie(Trie):
             if c.isalpha() == False or c == ' ':
                 return -3
         # 4: word is not in the dictionary 
-        if word not in self.potentialWords:
+        if word not in self.potentialWords.words():
             return -4
         # -5: word has already been found 
-        if word in self.currentWords:
+        if word in self.currentWords.words():
             return -5
         pass
 
@@ -94,14 +95,11 @@ class SBTrie(Trie):
         # - word has to have the central letter
         # - words can only have the other letters in the otherLetters string
 
-        if(len(word) < 4 or centralLetter not in word):
-            return False
-        
         for word in self.currentWords.words():
-            for c in word:
-                if c not in otherLetters:
-                    return False
-            finalList.append(word)
+            if(len(word) >= 4 and centralLetter in word):
+                    for c in word:
+                        if c in otherLetters:
+                            finalList.append(word)
 
         return finalList
     
